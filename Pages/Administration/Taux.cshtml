@@ -1,0 +1,120 @@
+﻿@page
+@model miniProjet.Pages.Administration.TauxModel
+
+@{
+    ViewData["Title"] = "Taux";
+}
+
+<h1>Taux</h1>
+<div id="accordion">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-outline-dark" style="width: 300px;" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Les taux de présence par matière
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Matiere[0].libele)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Matiere[0].Filiere)
+                            </th>
+                            <th><span style="color:#28A745">Present</span>/<span style="color:#DC3545">Absent</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.MatiereAbsences)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.matiere.libele)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.matiere.Filiere.libele)
+                                </td>
+                                <td>
+                                    @if (item.taux >= 0)
+                                    {
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: @(item.taux)%" aria-valuenow="@item.taux" aria-valuemin="0" aria-valuemax="100">@item.taux%</div>
+                                            <div class="progress-bar bg-danger" role="progressbar" style="width: @(100-item.taux)%" aria-valuenow="@(100-item.taux)" aria-valuemin="0" aria-valuemax="100">@(100-item.taux)%</div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span>Aucune information sur cette matière</span>
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+                <button class="btn btn-outline-dark collapsed" style="    width: 300px;" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Les taux de présence par classe
+                </button>
+            </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Matiere[0].libele)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Matiere[0].Filiere)
+                            </th>
+                            <th><span style="color:#28A745">Present</span>/<span style="color:#DC3545">Absent</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ClasseAbsences)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.classe.libele)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.classe.libele)
+                                </td>
+                                <td>
+                                    @if (item.taux >= 0)
+                                    {
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: @(item.taux)%" aria-valuenow="@item.taux" aria-valuemin="0" aria-valuemax="100">@item.taux%</div>
+                                            <div class="progress-bar bg-danger" role="progressbar" style="width: @(100-item.taux)%" aria-valuenow="@(100-item.taux)" aria-valuemin="0" aria-valuemax="100">@(100-item.taux)%</div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span>Aucune information sur cette classe</span>
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

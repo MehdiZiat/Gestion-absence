@@ -1,0 +1,108 @@
+﻿@page
+@model miniProjet.Pages.Administration.Classes.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Classe</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Classe.Id" />
+            <div class="form-group">
+                <label asp-for="Classe.libele" class="control-label"></label>
+                <input asp-for="Classe.libele" class="form-control" />
+                <span asp-validation-for="Classe.libele" class="text-danger"></span>
+            </div>
+            <p>
+                <a class="btn btn-success" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Afficher les etudiants de cette classe</a>
+                <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Afficher les etudiants qui n'ont pas de classe</button>
+                <button class="btn btn-success" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Afficher tout</button>
+            </p>
+            <div class="row">
+                <div class="col">
+                    <div class="collapse multi-collapse" id="multiCollapseExample1">
+                        <div class="card card-body">
+                            <div class="form-group">
+                                <label class="control-label">Les etudiants de cette classe</label>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Nom complet
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach(var item in Model.EtudiantsActuel)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem=>item.UserName)
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-danger" asp-page="Edit" asp-page-handler="RemoveStudent" asp-route-id="@item.Id" asp-route-idclasse="@Model.Classe.Id">Retirer</a>
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="collapse multi-collapse" id="multiCollapseExample2">
+                        <div class="card card-body">
+                            <div class="form-group">
+                                <label class="control-label">Les etudiants qui n'ont pas de classe</label>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Nom complet
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.EtudiantsSansClasse)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.UserName)
+                                                </td>
+                                                <td>
+                                                  <a class="btn btn-info" asp-page="Edit" asp-page-handler="AddStudent" asp-route-id="@item.Id" asp-route-idclasse="@Model.Classe.Id">Ajouter</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

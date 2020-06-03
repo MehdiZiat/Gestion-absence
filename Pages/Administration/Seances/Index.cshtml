@@ -1,0 +1,48 @@
+﻿@page
+@model miniProjet.Pages.Administration.Seances.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Seance[0].date)
+            </th>
+            <th> @Html.DisplayNameFor(model => model.Seance[0].Matiere)</th>
+            <th> @Html.DisplayNameFor(model => model.Seance[0].Classe)</th>
+            <th> @Html.DisplayNameFor(model => model.Seance[0].Professeur)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Seance)
+        {
+            <tr>
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Matiere.libele)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Classe.libele)
+                </td>
+                <td>
+                    Dr.@Html.DisplayFor(modelItem => item.Professeur.UserName)
+                </td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

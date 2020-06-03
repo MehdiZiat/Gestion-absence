@@ -1,0 +1,50 @@
+﻿@page
+@model miniProjet.Pages.Professeur.listModel
+@{
+    ViewData["Title"] = "list";
+}
+
+<h1>Classe : @Model.classe.libele</h1>
+<h2>Matiere : @Model.seance.Matiere.libele</h2>
+<table class="table thead-dark">
+    <thead>
+        <tr>
+            <th>
+                Prenom
+            </th>
+            <th>
+                Nom
+            </th>
+            <th>
+                Statut
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Etudiant.firstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Etudiant.lastName)
+                </td>
+                <td>
+                    @if (item.absence!=null&&item.absence.statut)
+                    {
+                        <span class="text-danger">Absent</span>
+                    }
+                    else if(item.absence != null && !item.absence.statut)
+                    {
+                        <span class="text-success">Present</span>
+                    }
+                    else
+                    {
+                        <span>---</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

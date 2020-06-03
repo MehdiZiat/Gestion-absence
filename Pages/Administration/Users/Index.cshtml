@@ -1,0 +1,58 @@
+﻿@page
+@model miniProjet.Pages.Administration.Users.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <a class=" btn btn-link" asp-area="Identity" asp-page="/Account/Register">Add a new user</a>
+        <h3 class="box-title">
+            <b>Users with Roles</b>
+        </h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="panel-body">
+        <table class="table table-hover table-bordered table-condensed" id="UsersWithRoles">
+            <thead>
+                <tr>
+                    <td><b>Username</b></td>
+                    <td><b>Email</b></td>
+                    <td><b>Roles</b></td>
+                </tr>
+            </thead>
+            @foreach (var user in Model.admins)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td>@user.role</td>
+
+                </tr>
+
+            }
+
+        </table>
+    </div>
+    <div class="panel-footer">
+        <p class="box-title"><b>Total Users till @String.Format("{0 : dddd, MMMM d, yyyy}", DateTime.Now)  : </b><span class="label label-primary">120</span></p>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+
+        $(function () {
+            $('#UsersWithRoles').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true
+            });
+        });
+    </script>
+}  

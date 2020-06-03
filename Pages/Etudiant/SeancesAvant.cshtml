@@ -1,0 +1,68 @@
+﻿@page
+@model miniProjet.Pages.Etudiant.SeancesAvantModel
+@{
+}
+<a class="btn btn-info" style="margin-bottom:10px;" asp-page="Index"><< Retour</a>
+    <div class="row">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        Date seance
+                    </th>
+                    <th>
+                        Matiere
+                    </th>
+                    <th>
+                        Professeur
+                    </th>
+                    <th>
+                        Statut
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.modeleSeanceAbsences.Count > 0)
+                {
+                    @foreach (var item in Model.modeleSeanceAbsences)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.seance.date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.seance.Matiere.libele)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.seance.Professeur.UserName)
+
+                            </td>
+                            <td>
+                                @if (item.absence.statut && item.seance.date < DateTime.Now)
+                                {
+                                    <button type="button" class="btn btn-danger btn-lg" disabled>Absent</button>
+                                }
+                                else if (!item.absence.statut || (!item.absence.statut && item.seance.date < DateTime.Now))
+                                {
+                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="@item.absence.date">
+                                        <button type="button" style="pointer-events:none;" class="btn btn-success btn-lg">Present</button>
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span>-----</span>
+                                }
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td class="text-info"> Aucune séance n'est programmé aujourdhui</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>

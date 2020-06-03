@@ -1,0 +1,192 @@
+﻿@page
+@model miniProjet.Pages.Professeur.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Les séances du DR. @Model.user.UserName</h1>
+<div class="accordion" id="accordionExample">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+                <button class="btn btn-lg btn-dark" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Les seances de cette semaine
+                </button>
+            </h2>
+        </div>
+
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+                @if (Model.SeancesOfThisWeek.Count > 0)
+                {
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Date de la seance
+                                </th>
+                                <th>
+                                    Heure de la seance
+                                </th>
+                                <th>
+                                    Matiere
+                                </th>
+                                <th>
+                                    Classe
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.SeancesOfThisWeek)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.date.ToShortDateString()   
+                                    </td>
+                                    <td>
+                                        @item.date.ToShortTimeString()
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Matiere.libele)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Classe.libele)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>Aucune séance n'est programmé pour cette semaine</p>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+                <button class="btn btn-lg btn-dark collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Les séances précedentes
+                </button>
+            </h2>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body">
+                @if (Model.Seances.Count > 0)
+                {
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Date de la seance
+                                </th>
+                                <th>
+                                    Heure de la seance
+                                </th>
+                                <th>
+                                    Matiere
+                                </th>
+                                <th>
+                                    Classe
+                                </th>
+                                <th>
+                                    Liste des presences
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Seances)
+                            {
+                            
+                                <tr>
+                                    <td>
+                                        @item.date.ToShortDateString()
+                                    </td>
+                                    <td>
+                                        @item.date.ToShortTimeString()
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Matiere.libele)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Classe.libele)
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-link" asp-page="list" asp-route-id="@item.Id">Voir la liste des présents</a>
+                                    </td>
+                                </tr>
+                            
+
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>Vous n'avez eu aucune séance avant le  @String.Format("{0 : dddd, MMMM d, yyyy}", DateTime.Now)</p>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingThree">
+            <h2 class="mb-0">
+                <button class="btn btn-lg btn-dark collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Les seances des semaines prochaines
+                </button>
+            </h2>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+            <div class="card-body">
+                @if (Model.FutureSeances.Count > 0)
+                {
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Date de la seance
+                                </th>
+                                <th>
+                                    Heure de la seance
+                                </th>
+                                <th>
+                                    Matiere
+                                </th>
+                                <th>
+                                    Classe
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.FutureSeances)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.date.ToShortDateString()
+                                    </td>
+                                    <td>
+                                        @item.date.ToShortTimeString()
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Matiere.libele)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Classe.libele)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>Vous n'avez pas de séance programmée pour les semaines prochaines</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+

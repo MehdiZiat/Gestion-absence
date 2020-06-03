@@ -1,0 +1,108 @@
+﻿@page
+@model miniProjet.Pages.Etudiant.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<h3>@Model.classe.libele</h3>
+<a class="btn btn-secondary"   asp-page="SeancesAvant" > << Les seances dernières</a> 
+
+<h3>Les séances programmées pour le : @String.Format("{0 : dddd, MMMM d, yyyy}", DateTime.Now) </h3>
+<div class="row">
+    <div class="col-md-8">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        Date seance
+                    </th>
+                    <th>
+                        Matiere
+                    </th>
+                    <th>
+                        Professeur
+                    </th>
+                    <th>
+                        Statut
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.modelSeanceAbsence.Count > 0)
+                {
+                    @foreach (var item in Model.modelSeanceAbsence)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.seance.date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.seance.Matiere.libele)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.seance.Professeur.UserName)
+
+                            </td>
+                            <td>
+                                @if (item.absence.statut && item.seance.date < DateTime.Now)
+                                {
+                                    <button type="button" class="btn btn-danger btn-lg" disabled>Absent</button>
+                                }
+                                else if (!item.absence.statut || (!item.absence.statut && item.seance.date < DateTime.Now))
+                                {
+                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="@item.absence.date">
+                                        <button type="button" style="pointer-events:none;" class="btn btn-success btn-lg">Present</button>
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span>-----</span>
+                                }
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td class="text-info"> Aucune séance n'est programmé aujourdhui</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-4">
+        @if (Model.seanceActuel != null)
+        {
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Séance en cours</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@Model.seanceActuel.Matiere.libele</h6>
+                    <p class="card-text">Vous avez maintenant un cours avec Dr. @Model.seanceActuel.Professeur.UserName</p>
+                    @if (Model.etatSeanceActuel)
+                    {
+                        <a asp-page="Index" asp-page-handler="MarquerPresence" asp-route-id="@Model.seanceActuel.Id" class="btn btn-success">Marquer la présence</a>
+                    }
+                    else
+                    {
+                        <p>Vous étes marqué present</p>
+                    }
+
+
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title border-info">Vous n'avez pas de cours en ce moment</h5>
+
+
+                </div>
+            </div>
+        }
+    </div>
+</div>

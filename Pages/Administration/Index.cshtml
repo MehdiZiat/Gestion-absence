@@ -1,0 +1,53 @@
+﻿@page
+@model miniProjet.Pages.Administration.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<section class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <a class="card-button" style="text-decoration:none" asp-page="Users/Index">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" height="241" src="~/images/Laptop.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Gérer les utilisateurs</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a asp-page="Classes/Index" class="card-button" style="text-decoration:none" >
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" height="241" src="~/images/Class.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Gérer les classes</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="card-button" style="text-decoration:none" asp-page="Seances/Index">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="~/images/Clock.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Gérer les séances</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="offset-4 col-md-4">
+            <a class="card-button" style="text-decoration:none" asp-page="Taux">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="~/images/stats.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Taux d'absence et de presences</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
